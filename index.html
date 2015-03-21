@@ -206,8 +206,7 @@
   }
 
   function changePictures2() {
-    var random = getUniqueRandom(images.length);
-    var questionName = images[random];
+    var questionName = getQuestionName(images.length);
     setChar($('#question'), questionName);
     var names = { };
     names[questionName] = true;
@@ -246,10 +245,7 @@
     }
 
     if (isRight) {
-      if (answerName.substring(0,1) === charQuestion) {
-        names[answerName] = true
-        return answerName;
-      }
+      return questionName;
     }
     else {
       if (answerName.substring(0,1) !== charQuestion) {
@@ -260,26 +256,34 @@
     return getAnswer(charQuestion, isRight, names);
   }
 
-  function getUniqueRandom(max) {
-    for (var i = 0; i < 100; i++) {    
-      var number = Math.floor(Math.random() * max);
-      if (!old[number]) {
-        old[number] = true
-        return number
-      }
+  function getQuestionName(max) {
+     for (var i = 0; i < 200; i++) {    
+       var number = getRandom(max);
+       var questionName = images[number];
+       if (chars !== undefined && $.inArray(questionName.substring(0,1), chars) > -1 ) { // ist gewuenschter buchstabe
+         if (!old[number]) { // noch nicht vorgekommen
+           old[number] = true
+           return questionName
+         }
+       }
     }
-    return number
+    return questionName
   }
 
-
   function getRandom(max) {
-    return Math.floor(Math.random() * max);
+     return Math.floor(Math.random() * max);
   }
 
 //  var images = ['laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus', 'messer', 'milch', 'mond', 'motorrad','radieschen', 'radio', 'rasenmaeher', 'roller','anhaenger', 'affe', 'apfel'];
 //  var images = [ 'katze', 'kerze', 'kirche', 'kirsche', 'klavier',  'kran', 'laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus',  'messer', 'milch', 'mond', 'motorrad', 'radieschen', 'radio',  'rasenmaeher', 'roller', 'telefon', 'tisch', 'topf', 'traktor',  'tuer', 'haus', 'honig' ];
-  var images = ['affe', 'anhaenger', 'apfel', 'banane', 'bett', 'brokoli', 'brot', 'butter', 'esel', 'elefant', 'erbse', 'hand', 'haus', 'honig', 'hund', 'igel', 'indianer', 'insel', 'katze', 'kerze', 'kirche', 'kirsche', 'klavier', 'kran', 'laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus', 'messer', 'milch', 'mond', 'motorrad', 'nagel', 'nashorn', 'nudel', 'radieschen', 'radio', 'rasenmaeher', 'roller', 'sonne', 'salat', 'telefon', 'tisch', 'topf', 'traktor', 'tuer'];
+  var images = ['affe', 'anhaenger', 'apfel', 'banane', 'bett', 'brokoli', 'brot', 'butter', 'esel', 'elefant', 'erbse', 'delfin', 'fahrrad', 'frosch', 'fuchs', 'fisch', 'gabel', 'gabelstapler', 'giraffe', 'hand', 'haus', 'honig', 'hund', 'igel', 'indianer', 'insel', 'katze', 'kerze', 'kirche', 'kirsche', 'klavier', 'kran', 'laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus', 'messer', 'milch', 'mond', 'motorrad', 'nagel', 'nashorn', 'nudel', 'ohr', 'ofen', 'pinguin', 'papagei', 'radieschen', 'radio', 'rasenmaeher', 'roller', 'sonne', 'salat', 'telefon', 'tisch', 'topf', 'traktor', 'tuer', 'uhr', 'uboot', 'wal', 'wald'];
+
   var old = {}
+
+// var chars = ['a', 'b', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w']
+
+//  var chars = ['a', 'b', 'e', 'i', 'n', 's', 'r', 'k']
+  var chars = ['w', 'u']
 
 
 </script>
