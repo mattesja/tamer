@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Game</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=no">
+
+  <link href="../dist/css/bootstrap.css" rel="stylesheet">
+  <link href="grid.css" rel="stylesheet">
+
+  <script src="../js/jquery-1.10.2.min.js"></script>
+  <script src="../js/jquery.mb.audio.js"></script>
+
+  <script type="text/javascript" src="../js/jquery.mb.audio.js"></script>
+  <script type="text/javascript">
+
+    /*
+     * DEFINE SOUNDS
+     */
+    $.mbAudio.sounds = {
+
+      textSprite: {
+        id: "textSprite",
+        mp3: "sound/texts.mp3",
+        //example of sprite
+        sprite:{
+          yes: {id: "yes", start: 0, end: 2, loop: false},
+          no : {id: "no", start: 2, end: 4, loop: false},
+          nearly: {id: "nearly", start: 4, end: 6, loop: false},
+          won : {id: "won", start: 6, end: 8, loop: false},
+          looser : {id: "looser", start: 8, end: 9.4, loop: false}
+        }
+      },
+
+      abcSprite: {
+        id: "abcSprite",
+        mp3: "sound/abc.mp3",
+        //example of sprite
+        sprite:{
+          a: {id: "a", start: 0, end: 2, loop: false},
+          b: {id: "b", start: 2, end: 4, loop: false},
+          c: {id: "c", start: 4, end: 6, loop: false},
+          d: {id: "d", start: 6, end: 8, loop: false},
+          e: {id: "e", start: 8, end: 10, loop: false},
+          f: {id: "f", start: 10, end: 12, loop: false},
+          g: {id: "g", start: 12, end: 14, loop: false},
+          h: {id: "h", start: 14, end: 16, loop: false},
+          i: {id: "i", start: 16, end: 18, loop: false},
+          j: {id: "j", start: 18, end: 20, loop: false},
+          k: {id: "k", start: 20, end: 22, loop: false},
+          l: {id: "l", start: 22, end: 24, loop: false},
+          m: {id: "m", start: 24, end: 26, loop: false},
+          n: {id: "n", start: 26, end: 28, loop: false},
+          o: {id: "o", start: 28, end: 30, loop: false},
+          p: {id: "p", start: 30, end: 32, loop: false},
+          q: {id: "q", start: 32, end: 34, loop: false},
+          r: {id: "r", start: 34, end: 36, loop: false},
+          s: {id: "s", start: 36, end: 38, loop: false},
+          t: {id: "t", start: 38, end: 40, loop: false},
+          u: {id: "u", start: 40, end: 42, loop: false},
+          v: {id: "v", start: 42, end: 44, loop: false},
+          w: {id: "w", start: 44, end: 46, loop: false},
+          x: {id: "x", start: 46, end: 48, loop: false},
+          y: {id: "y", start: 48, end: 50, loop: false},
+          z: {id: "z", start: 50, end: 52, loop: false},
+        }
+      }
+    };
+
+    $(document).on("initAudio", function () {
+
+      //otherwise sound is initialized on the first tap loosing time and UX
+      $.mbAudio.pause('textSprite', audioIsReady);
+
+    });
+
+  </script>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+<div class="container">
+
+  <div class="progress" id="progressbar">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+         aria-valuemax="100" data-percentage="0">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 large">?</div>
+    <div class="col-md-4 large" id="question">?</div>
+    <div class="col-md-4 large">?</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 play"><img id="answer1" src="pic/empty.png" class="img-responsive"></div>
+    <div class="col-md-4 pause"><img id="answer2" src="pic/empty.png" class="img-responsive"></div>
+    <div class="col-md-4"><img id="answer3" src="pic/empty.png" class="img-responsive"></div>
+  </div>
+
+</div>
+<!-- /container -->
+
+<script>
+  var listenerEnabled = true;
+
+  $(document).ready(function () {
+    $('#question').click(function (event) {
+      if (listenerEnabled) {
+        listenerEnabled = false;
+        speakCharacter($('#question').text().toLowerCase());
+        setTimeout(function () {
+          listenerEnabled = true;
+        }, 2000);
+      }
+    });
+
+    $('#answer1, #answer2, #answer3').click(function (event) {
+      if (listenerEnabled) {
+        listenerEnabled = false;
+        evaluateAnswer($(this));
+        setTimeout(function () {
+          listenerEnabled = true;
+        }, 2000);
+      }
+    });
+
+    loadImages();
+
+    changePictures();
+
+    $('body').addClass('noscroll').css('top', -(document.documentElement.scrollTop) + 'px');
+
+  });
+
+  function loadImages() {
+    for (var i = 0; i < images.length; i++) {
+      $('<img src="pic/'+images[i]+'.jpg">').hide().appendTo('body');
+    }
+  }
+
+  function speakCharacter(c) {
+    $.mbAudio.play('abcSprite', c);
+  }
+
+  function evaluateAnswer(context) {
+    var charQuestion = $('#question').text().toLowerCase();
+    var charAnswer = context.attr('src').substring(4,5);
+
+    if (charQuestion === charAnswer) {
+      incrementProgress();
+      changePictures();
+    }
+    else {
+      decrementProgress();
+    }
+  }
+
+  function incrementProgress() {
+    changeProgress(10);
+  }
+
+  function decrementProgress() {
+    changeProgress(-10);
+  }
+
+  function changeProgress(amount) {
+    var me = $('#progressbar .progress-bar-success');
+    var perc = parseInt(me.attr("data-percentage"));
+    if (amount > 0 || perc + amount >= 0) {
+      perc += amount;
+    }
+    me.css('width', perc + '%');
+    me.attr('data-percentage', perc);
+    if (perc == 0 ) {
+      $.mbAudio.play('textSprite', 'looser');
+    }
+    else if (perc == 90 ) {
+      $.mbAudio.play('textSprite', 'nearly');
+    }
+    else if (perc == 100 ) {
+      $.mbAudio.play('textSprite', 'won');
+      setTimeout(function () {
+        me.css('width', '0%');
+        me.attr('data-percentage', 0);
+      }, 4000);
+
+    }
+    else if (amount > 0) {
+      $.mbAudio.play('textSprite', 'yes');
+    }
+    else {
+      $.mbAudio.play('textSprite', 'no');
+    }
+  }
+
+  function changePictures() {
+    setTimeout(changePictures2, 1000);
+  }
+
+  function changePictures2() {
+    var random = getUniqueRandom(images.length);
+    var questionName = images[random];
+    setChar($('#question'), questionName);
+    var names = { };
+    names[questionName] = true;
+
+    var rightAnswer = getRandom(3) + 1;
+
+    setPicture($('#answer1'), getAnswer(questionName, 1 === rightAnswer, names));
+    setPicture($('#answer2'), getAnswer(questionName, 2 === rightAnswer, names));
+    setPicture($('#answer3'), getAnswer(questionName, 3 === rightAnswer, names));
+  }
+
+  function setPicture(node, imageName) {
+    node.fadeOut(1000, function() {
+      node.attr('src', 'pic/' + imageName + '.jpg');
+    });
+
+    node.fadeIn();
+  }
+
+  function setChar(node, imageName) {
+    node.fadeOut(1000, function() {
+      node.text(imageName.toUpperCase().substring(0,1));
+    });
+
+    node.fadeIn();
+  }
+
+  function getAnswer(questionName, isRight, names) {
+    console.log(questionName + Object.keys(names));
+    var random = getRandom(images.length);
+    var answerName = images[random];
+    var charQuestion = questionName.substring(0,1);
+
+    if (names[answerName] !== undefined) {
+      return getAnswer(questionName, isRight, names);
+    }
+
+    if (isRight) {
+      if (answerName.substring(0,1) === charQuestion) {
+        names[answerName] = true
+        return answerName;
+      }
+    }
+    else {
+      if (answerName.substring(0,1) !== charQuestion) {
+        names[answerName] = true
+        return answerName;
+      }
+    }
+    return getAnswer(charQuestion, isRight, names);
+  }
+
+  function getUniqueRandom(max) {
+    for (var i = 0; i < 100; i++) {    
+      var number = Math.floor(Math.random() * max);
+      if (!old[number]) {
+        old[number] = true
+        return number
+      }
+    }
+    return number
+  }
+
+
+  function getRandom(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+//  var images = ['laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus', 'messer', 'milch', 'mond', 'motorrad','radieschen', 'radio', 'rasenmaeher', 'roller','anhaenger', 'affe', 'apfel'];
+//  var images = [ 'katze', 'kerze', 'kirche', 'kirsche', 'klavier',  'kran', 'laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus',  'messer', 'milch', 'mond', 'motorrad', 'radieschen', 'radio',  'rasenmaeher', 'roller', 'telefon', 'tisch', 'topf', 'traktor',  'tuer', 'haus', 'honig' ];
+  var images = ['affe', 'anhaenger', 'apfel', 'banane', 'bett', 'brokoli', 'brot', 'butter', 'esel', 'elefant', 'erbse', 'hand', 'haus', 'honig', 'hund', 'igel', 'indianer', 'insel', 'katze', 'kerze', 'kirche', 'kirsche', 'klavier', 'kran', 'laterne', 'lego', 'leiter', 'maehdrescher', 'mais', 'maus', 'messer', 'milch', 'mond', 'motorrad', 'nagel', 'nashorn', 'nudel', 'radieschen', 'radio', 'rasenmaeher', 'roller', 'sonne', 'salat', 'telefon', 'tisch', 'topf', 'traktor', 'tuer'];
+  var old = {}
+
+
+</script>
+</body>
+</html>
