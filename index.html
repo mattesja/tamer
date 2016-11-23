@@ -228,7 +228,7 @@
 
   function setChar(node, imageName) {
     node.fadeOut(1000, function() {
-      node.text(imageName.toUpperCase().substring(0,1));
+      node.text(imageName.substring(0,1));
     });
 
     node.fadeIn();
@@ -280,10 +280,14 @@
 
   var old = {}
 
-// var chars = ['a', 'b', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w']
+//var chars = ['a', 'b', 'e', 'f', 'h', 'i', 'k', 'n', 'o', 'p', 's']
+var chars = ['a', 'b', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w']
+//var chars = ['b', 'd', 'g', 'k','n', 'p', 's', 'u', 'w']
+// var chars = [ 'd', 'g', 'n', 'p', 's', 'u', 'w']
+//var chars = [ 'd',  'n', 's', 'u', 'w', 'g', 'k', 'f']
 
 //  var chars = ['a', 'b', 'e', 'i', 'n', 's', 'r', 'k']
-  var chars = ['w', 'u']
+//  var chars = ['w', 'u']
 
 
 </script>
