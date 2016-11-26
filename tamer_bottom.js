@@ -1,6 +1,6 @@
 var listenerEnabled = true;
 
-var correctAnswer = null;
+var correctAnswer = undefined;
 
 $(document).ready(function () {
 
