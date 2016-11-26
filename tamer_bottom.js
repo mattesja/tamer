@@ -1,6 +1,18 @@
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+  var value = this.getItem(key);
+  return value && JSON.parse(value);
+}
+
+
 var listenerEnabled = true;
 
 var correctAnswer = undefined;
+
+var quiz = localStorage.getObject('quiz');
 
 $(document).ready(function () {
 
@@ -110,19 +122,3 @@ function getQuiz() {
 function getRandom(max) {
   return Math.floor(Math.random() * max);
 }
-
-var quiz = [
-  {q : 'Ich bringe das Paket zur ?.',
-   a1 : 'Post',
-   a2 : '-',
-   a3 : 'Bost',
-   a  : 'a1'
-  },
-  {q : 'Der ? bringt das Paket.',
-   a1 : 'Postbote',
-   a2 : '-',
-   a3 : 'Bostbote',
-   a  : 'a1'
-  }
-
-]
