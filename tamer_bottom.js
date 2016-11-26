@@ -38,9 +38,13 @@ function evaluateAnswer(context) {
 
   if (answer === correctAnswer) {
     incrementProgress();
+    if (quizIndex > -1) { // nur entfernen, wenn frage nicht zuvor falsch beantwortet wurde
+      quiz.splice(quizIndex,1);
+    }
     changeQuiz();
   }
   else {
+    quizIndex = -1; // nicht entfernen (s.o.)
     decrementProgress();
   }
 }
@@ -90,7 +94,6 @@ function changeQuiz() {
 function setQuizInner() {
   var quiz = getQuiz();
   setQuestion($('#question'), quiz.q);
-  correctAnswer = quiz.a;
   setAnswer($('#a1'), quiz.a1);
   setAnswer($('#a2'), quiz.a2);
   setAnswer($('#a3'), quiz.a3);
@@ -116,6 +119,8 @@ function getQuiz() {
   var max = quiz.length;
   var number = getRandom(max);
   var question = quiz[number];
+  correctAnswer = question.a;
+  quizIndex = number;
   return question;
 }
 
