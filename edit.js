@@ -28,7 +28,7 @@ $(document).ready(function () {
   var quizArray = localStorage.getObject('quiz');
 
   for ( var i = 0; i < quizArray.length; i++ ) {
-    $( "#deleteform" ).append( '<label class="checkbox-inline"><input type="checkbox" id="check'+i+'" value="delete">'+quizArray[i].q+'</label>' );
+    $( "#deleteform" ).append( '<div class="radio"><label class="checkbox-inline"><input type="checkbox" id="check'+i+'" value="delete">'+quizArray[i].q+'</label></div>' );
   }
 
 
@@ -38,7 +38,7 @@ $(document).ready(function () {
       return;
     }
     var quizClone = quizArray.slice(0);
-    for ( var i = 0; i < quizArray.length; i++ ) {
+    for ( var i = quizArray.length-1; i >= 0; i-- ) {
       if ($('#check'+i).is(":checked")) {
         quizClone.splice(i, 1);
       }
