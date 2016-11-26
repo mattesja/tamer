@@ -7,12 +7,40 @@ Storage.prototype.getObject = function(key) {
   return value && JSON.parse(value);
 }
 
-
 var listenerEnabled = true;
 
 var correctAnswer = undefined;
 
 var quiz = localStorage.getObject('quiz');
+
+if (quiz === undefined || quiz === null) {
+  var tempQuiz = [
+    {"q": "Ich bringe das Paket zur ?", "a1": "Post", "a2": "Bost", "a3": " ", "a": "a1"}, {
+      "q": "Die ? blüht.",
+      "a1": "Plume",
+      "a2": "Blume",
+      "a3": " ",
+      "a": "a2"
+    },
+    {"q": "Der Mann hat einen dicken ?.", "a1": "Pauch", "a2": "Bauch", "a3": " ", "a": "a2"},
+    {
+      "q": "Der ? gräbt eine Grube.",
+      "a1": "Pagger",
+      "a2": "Bagger",
+      "a3": " ",
+      "a": "a2"
+    },
+    {"q": "Der ? arbeitet.", "a1": "Pauarbeiter", "a2": "Bauarbeiter", "a3": " ", "a": "a2"}, {
+      "q": "Das Kind schreibt auf dem ?",
+      "a1": "Papier",
+      "a2": "Bapier",
+      "a3": " ",
+      "a": "a1"
+    },
+    {"q": "Das Kind ? gerne", "a1": "pastelt", "a2": "bastelt", "a3": " ", "a": "a2"}];
+
+  localStorage.setObject('quiz', tempQuiz);
+}
 
 $(document).ready(function () {
 
