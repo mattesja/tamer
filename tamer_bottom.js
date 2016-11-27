@@ -15,29 +15,23 @@ var quiz = localStorage.getObject('quiz');
 
 if (quiz === undefined || quiz === null) {
   var tempQuiz = [
-    {"q": "Ich bringe das Paket zur ?", "a1": "Post", "a2": "Bost", "a3": " ", "a": "a1"}, {
-      "q": "Die ? blüht.",
-      "a1": "Plume",
-      "a2": "Blume",
-      "a3": " ",
-      "a": "a2"
-    },
-    {"q": "Der Mann hat einen dicken ?.", "a1": "Pauch", "a2": "Bauch", "a3": " ", "a": "a2"},
-    {
-      "q": "Der ? gräbt eine Grube.",
-      "a1": "Pagger",
-      "a2": "Bagger",
-      "a3": " ",
-      "a": "a2"
-    },
-    {"q": "Der ? arbeitet.", "a1": "Pauarbeiter", "a2": "Bauarbeiter", "a3": " ", "a": "a2"}, {
-      "q": "Das Kind schreibt auf dem ?",
-      "a1": "Papier",
-      "a2": "Bapier",
-      "a3": " ",
-      "a": "a1"
-    },
-    {"q": "Das Kind ? gerne", "a1": "pastelt", "a2": "bastelt", "a3": " ", "a": "a2"}];
+    {"q": "Ich bringe das Paket zur ?", "a1": "Post", "a2": "Bost", "a3": "-", "a": "a1"},
+    {"q": "Die ? blüht.","a1": "Plume", "a2": "Blume", "a3": "-", "a": "a2" },
+    {"q": "Der Mann hat einen dicken ?.", "a1": "Pauch", "a2": "Bauch", "a3": "-", "a": "a2"},
+    {"q": "Der ? gräbt eine Grube.", "a1": "Pagger", "a2": "Bagger", "a3": "-", "a": "a2" },
+    {"q": "Wir ? Kuchen.", "a1": "packen", "a2": "backen", "a3": "-", "a": "a2" },
+    {"q": "Wir ? den Koffer.", "a1": "packen", "a2": "backen", "a3": "-", "a": "a1" },
+    {"q": "Weihnachten gibt es leckere ?.", "a1": "Plätzchen", "a2": "Blätzchen", "a3": "-", "a": "a1" },
+    {"q": "Der ? arbeitet.", "a1": "Pauarbeiter", "a2": "Bauarbeiter", "a3": "-", "a": "a2"},
+    {"q": "Das Kind schreibt auf dem ?", "a1": "Papier","a2": "Bapier", "a3": "-","a": "a1" },
+    {"q": "Das Kind ? gerne", "a1": "pastelt", "a2": "bastelt", "a3": "-", "a": "a2"},
+    {"q": "Das ? hat gefährliche Zähne.", "a1": "Tiger", "a2": "Diger", "a3": "-", "a": "a2"},
+    {"q": "Das Haus hat ein rotes ?", "a1": "Tach", "a2": "Dach", "a3": "-", "a": "a1"},
+    {"q": "Das Kind ist ?", "a1": "traurig", "a2": "draurig", "a3": "-", "a": "a1"},
+    {"q": "Das Schwein ist ?", "a1": "tick", "a2": "dick", "a3": "-", "a": "a1"},
+    {"q": "Ich ? aus dem Glas.", "a1": "trinke", "a2": "drinke", "a3": "-", "a": "a1"},
+    {"q": "Das Kind ist ?", "a1": "traurig", "a2": "draurig", "a3": "-", "a": "a1"}
+  ];
 
   localStorage.setObject('quiz', tempQuiz);
 }
@@ -82,7 +76,7 @@ function incrementProgress() {
 }
 
 function decrementProgress() {
-  changeProgress(-5);
+  changeProgress(-10);
 }
 
 function changeProgress(amount) {
